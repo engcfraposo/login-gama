@@ -15,8 +15,8 @@ function App() {
       .required("Email is required"),
       password: Yup.string()
       .required("Password is required")
-      .min(6, "Password is not valid")
-      .max(12, "Password is not valid"),
+      .min(6, "Password must be at least 6 characters")
+      .max(12, "Password must be at most 12 characters")
     }),
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
@@ -33,7 +33,6 @@ function App() {
             type="email"
             value={formik.values.email}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             isInvalid={formik.touched.email && !!formik.errors.email}
             isValid={formik.touched.email && !formik.errors.email}
           />
@@ -44,18 +43,29 @@ function App() {
             type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             isInvalid={!!formik.errors.password && formik.touched.password}
             isValid={formik.touched.password && !formik.errors.password}
           />
         </Form.Group>
-        <Button  type="submit" style={{marginTop: 15}}>
+        <Button  
+          type="submit" 
+          style={{marginTop: 15}}
+          disabled={!formik.isValid}
+        >
           Login
         </Button>
         {formik.errors.email && formik.touched.email 
-          && ( <Alert style={{marginTop: 15}} variant="danger">{formik.errors.email}</Alert> )}
-           {formik.errors.password && formik.touched.password 
-          && ( <Alert style={{marginTop: 15}} variant="danger">{formik.errors.password}</Alert> )}
+          && ( 
+            <Alert style={{marginTop: 15}} variant="danger">
+              {formik.errors.email}
+            </Alert> 
+          )}
+        {formik.errors.password && formik.touched.password 
+          && ( 
+            <Alert style={{marginTop: 15}} variant="danger">
+              {formik.errors.password}
+            </Alert> 
+          )}
       </Form>
       </Card.Body>
     </Card>
