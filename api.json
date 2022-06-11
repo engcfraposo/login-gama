@@ -7,6 +7,14 @@
       "lastname": "Monge",
       "age": 32,
       "id": 1
+    },
+    {
+      "email": "ziriguidunho@mail.com",
+      "password": "$2a$10$Rkd.pc64P9/aX4eiIqv3febLv1WfwAj4w4IYxWB.rQYsM6oQ0Gvj6",
+      "firstname": "ziriguidunhor",
+      "lastname": "da gama",
+      "age": 32,
+      "id": 2
     }
   ]
 }

@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { Button, Card, Form, Alert } from 'react-bootstrap';
 import * as Yup from 'yup';
+import { postSignIn } from './services/auth';
 import './App.css'
 
 function App() {
@@ -16,10 +17,13 @@ function App() {
       password: Yup.string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters")
-      .max(12, "Password must be at most 12 characters")
+      .min(12, "Password must be at least 12 characters"),
     }),
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async values => {
+      const { accessToken, user } = await postSignIn(values);
+      alert(JSON.stringify({
+        accessToken, firstname:user.firstname
+      }, null, 2));
     }
   });
   return (
