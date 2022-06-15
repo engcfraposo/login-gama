@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Permission } from "../store/users";
 
 interface SignIn {
     email: string,
@@ -10,13 +11,15 @@ interface User extends SignIn {
     firstname: string,
     lastname: string,
     age: number
+    permission: Permission
 }
 
-const baseUrl = axios.create({
+export const baseUrl = axios.create({
     baseURL: "http://localhost:3333"
 })
 
 export const postUser = async (user: Omit<User, "id">) => {
+    console.log("aqui", user)
     try {
         const response = await baseUrl.post("/register", user)
         return response.data

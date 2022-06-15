@@ -1,13 +1,13 @@
-import { useFormik } from 'formik';
-import { Button, Card, Form, Alert } from 'react-bootstrap';
-import * as Yup from 'yup';
-import { postSignIn } from './services/auth';
-import './App.css'
+import { Provider } from 'react-redux';
 import AppRoutes from './routes';
+import './App.css'
+import { store } from './store';
 
 function App() {
     return(
-      <AppRoutes />
+      <Provider store={store}>
+        <AppRoutes />
+      </Provider>   
     );
 }
 

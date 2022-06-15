@@ -1,16 +1,21 @@
 import { useFormik } from 'formik';
 import { Button, Card, Form, Alert } from 'react-bootstrap';
 import * as Yup from 'yup';
-import { postSignIn } from '../../services/auth';
+import { postUser, baseUrl } from '../../services/auth';
+import { signIn } from '../../store/users';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Register: React.FC = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
           email: '',
           password: '',
           firstname: '',
           lastname: '',
-          age: '',
+          age: 0,
         },
         validationSchema: Yup.object({
           email: Yup.string()
@@ -19,16 +24,17 @@ const Register: React.FC = () => {
           password: Yup.string()
           .required("Password is required")
           .min(6, "Password must be at least 6 characters")
-          .min(12, "Password must be at least 12 characters"),
+          .max(12, "Password must be at least 12 characters"),
           firstname: Yup.string().required("Firstname is required"),
           lastname: Yup.string().required("Lastname is required"),
-          age: Yup.string().required("Age is required"),
+          age: Yup.number().required("Age is required"),
         }),
         onSubmit: async values => {
-          const { accessToken, user } = await postSignIn(values);
-          alert(JSON.stringify({
-            accessToken, firstname:user.firstname
-          }, null, 2));
+          const { accessToken, user } = await postUser({...values, permission: 1});
+          dispatch(signIn({accessToken, permission: user.permission}))
+          //@ts-ignore
+          baseUrl.defaults.headers["Authorization"] = `Bearer ${accessToken}`
+          navigate("/dashboard")
         }
       });
       return (
