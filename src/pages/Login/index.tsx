@@ -48,7 +48,7 @@ const Login: React.FC = () => {
               />
             </Form.Group>
             <Form.Group controlId="password" style={{marginTop: 15}}>
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Senha</Form.Label>
               <Form.Control
                 type="password"
                 value={formik.values.password}
