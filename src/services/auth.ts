@@ -15,7 +15,7 @@ interface User extends SignIn {
 }
 
 export const baseUrl = axios.create({
-    baseURL: "http://localhost:3333"
+    baseURL: import.meta.env.BACKEND 
 })
 
 export const postUser = async (user: Omit<User, "id">) => {
